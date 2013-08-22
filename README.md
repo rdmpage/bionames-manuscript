@@ -210,7 +210,7 @@ I thank EOL for the funding that enabled Ryan Schenk to develop the interface, a
 
 - Deans, A. R., Yoder, M. J., & Balhoff, J. P. (2012). Time to change how we describe biodiversity. Trends in Ecology & Evolution, 27(2), 78–84. [doi:10.1016/j.tree.2011.11.007][Deans et al. 2012]
 
-- Edwards, J. L. (2000). Interoperability of Biodiversity Databases: Biodiversity Information on Every Desktop. Science, 289(5488), 2312–2314. [doi:10.1126/science.289.5488.2312]
+- Edwards, J. L. (2000). Interoperability of Biodiversity Databases: Biodiversity Information on Every Desktop. Science, 289(5488), 2312–2314. [doi:10.1126/science.289.5488.2312][Edwards 2000]
 
 - Faulkes, C. G., Bennett, N. C., Cotterill, F. P. D., Stanley, W., Mgode, G. F., & Verheyen, E. (2011). Phylogeography and cryptic diversity of the solitary-dwelling silvery mole-rat, genus *Heliophobius* (family: Bathyergidae). (A. Kitchener, Ed.)Journal of Zoology, 285(4), 324–338. [doi:10.1111/j.1469-7998.2011.00863.x][Faulkes et al. 2011]
 
@@ -242,7 +242,7 @@ I thank EOL for the funding that enabled Ryan Schenk to develop the interface, a
 
 - Page, R. D. M. (2008). Biodiversity informatics: the challenge of linking data and the role of shared identifiers. Briefings in Bioinformatics, 9(5), 345–354. [doi:10.1093/bib/bbn022][Page 2008a]
 
-Page, R. D. (2008). LSID Tester, a tool for testing Life Science Identifier resolution services. Source Code for Biology and Medicine, 3(1), 2. [doi:10.1186/1751-0473-3-2][Page 2008b]
+- Page, R. D. (2008). LSID Tester, a tool for testing Life Science Identifier resolution services. Source Code for Biology and Medicine, 3(1), 2. [doi:10.1186/1751-0473-3-2][Page 2008b]
 
 - Page, R. D. (2009). bioGUID: resolving, discovering, and minting identifiers for biodiversity informatics. BMC Bioinformatics, 10(Suppl 14), S5. [doi:10.1186/1471-2105-10-S14-S5][Page 2009]
 
