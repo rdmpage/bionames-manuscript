@@ -32,7 +32,7 @@ Figure 1 shows the relationships that are the focus of BioNames, namely the link
 
 At present the taxonomic scope of BioNames is restricted to names covered by the International Code of Zoological Nomenclature. Taxonomic names were obtained from the [Index of Organism Names (ION)](http://www.organismnames.com). Each name in ION has a Life Science Identifier (LSID) [Martin et al. 2005] which uniquely identifies that name. LSIDs can be dereferenced to return metadata in RDF [Page 2008b], ION LSIDs provide basic information on a taxonomic name using the [TDWG Taxon Name LSID Ontology](http://rs.tdwg.org/ontology/voc/TaxonName), in many cases including bibliographic details for the publication where the name first appeared (Fig. RDF). 
 
-![RDF](https://github.com/rdmpage/bionames-manuscript/blob/master/rdf)
+![RDF](https://raw.github.com/rdmpage/bionames-manuscript/master/rdf.png)
 
 Fig. RDF. The RDF retrieved by dereferencing the LSID urn:lsid:organismnames.com:name:371873, which identifies the taxonomic name *Pinnotheres atrinicola*.
 
@@ -85,7 +85,7 @@ lower case, strings the percentage length of the .
 
 For example, here is the graph for "Nystactes" [Fig. BIPART]. Computing the maximum weighted bipartite matching of this graph creates a map between the two sets of names.
 
-![BIPART](https://github.com/rdmpage/bionames-manuscript/blob/master/Nystactes.png)
+![BIPART](https://raw.github.com/rdmpage/bionames-manuscript/master/Nystactes.png)
 
 Fig. BIPART. Bipartite graph of string similarities between taxonomic names containing the string "Nystactes" in the ION and GBIF databases. Solid edges in the graph represent the maximum weighted bipartite matching, and define the mapping between ION and GBIF names.
 
@@ -142,7 +142,7 @@ Fig. TREE. Screenshot of phylogeny from PhyLoTA as displayed in BioNames. [http:
 
 The BioNames web site features a "dashboard" which displays various summaries of the data it contains. For example, Fig. PUB shows a bubble chart of the number of articles different publishers have made available online. "Publisher" in this context is broadly defined to include digital archives such as BioStor and JSTOR, repositories using [DSpace](http://www.dspace.org), and commercial publishers such as Elsevier, Informa UK, Magnolia Press, Springer, and Wiley. The diagram is dominated by BioStor, which repurposes Biodiversity Heritage Library content. Hence, the largest single "publisher" in Fig. PUB is providing open access content.
 
-![PUB](https://github.com/rdmpage/bionames-manuscript/blob/master/publishers.png)
+![PUB](https://raw.github.com/rdmpage/bionames-manuscript/master/publishers.png)
 
 
 Fig. PUB. Bubble chart showing numbers of articles made available online by different publishers. Magnolia Press is the publisher of *Zootaxa*.
