@@ -206,7 +206,7 @@ I thank EOL for the funding that enabled Ryan Schenk to develop the interface, a
 
 - Böhlke, J. E. (1958). Substitute Names for *Nystactes* Bohlke and *Lucaya* Bohlke, Preoccupied. Copeia, 1958(1), 59. [doi:10.2307/1439557][Böhlke 1958]
 
-- Davis GM, Kitikoon V, Temcharoen P (1976) Monograph on "*Lithoglyphopsis*" *aperta*, the snail host of Mekong River schistosomiasis. Malacologia 15(2): 241-87.
+- Davis GM, Kitikoon V, Temcharoen P (1976) Monograph on "*Lithoglyphopsis*" *aperta*, the snail host of Mekong River schistosomiasis. Malacologia 15(2): 241-87. [http://biostor.org/reference/102054][Davis et al. 1976]
 
 - Deans, A. R., Yoder, M. J., & Balhoff, J. P. (2012). Time to change how we describe biodiversity. Trends in Ecology & Evolution, 27(2), 78–84. [doi:10.1016/j.tree.2011.11.007][Deans et al. 2012]
 
@@ -284,6 +284,7 @@ I thank EOL for the funding that enabled Ryan Schenk to develop the interface, a
 [Böhlke 1957]: http://www.jstor.org/stable/4064494
 [Böhlke 1958]: http://dx.doi.org/10.2307/1439557
 [Deans et al. 2012]: http://dx.doi.org/10.1016/j.tree.2011.11.007
+[Davis et al. 1976]: http://biostor.org/reference/102054
 [Edwards 2000]: http://dx.doi.org/10.1126/science.289.5488.2312
 [Faulkes et al. 2011]: http://dx.doi.org/10.1111/j.1469-7998.2011.00863.x
 [Franz and Cardona-Duque 2013]: http://dx.doi.org/10.1080/14772000.2013.806371
