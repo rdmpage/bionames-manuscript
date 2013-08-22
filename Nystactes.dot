@@ -1,0 +1,24 @@
+graph G {
+graph [fontname = "helvetica"];
+node [fontname = "helvetica"];
+edge [fontname = "helvetica"];
+"0" [label="Nystactes Kaup, 1829"];
+"1" [label="Nystactes Böhlke, 1957"];
+"2" [label="Nystactes Gloger, 1827"];
+"3" [label="Nystactes Bohlke"];
+"4" [label="Nystactes"];
+"5" [label="Nystactes Gloger 1827"];
+"6" [label="Nystactes Kaup 1829"];
+"0" -- "3" [style="dashed", label="63"];
+"0" -- "4" [style="dashed", label="64"];
+"0" -- "5" [style="dashed", label="70"];
+"0" -- "6" [label="100"];
+"1" -- "3" [label="84"];
+"1" -- "4" [style="dashed", label="58"];
+"1" -- "5" [style="dashed", label="70"];
+"1" -- "6" [style="dashed", label="68"];
+"2" -- "3" [style="dashed", label="65"];
+"2" -- "4" [style="dashed", label="60"];
+"2" -- "5" [label="100"];
+"2" -- "6" [style="dashed", label="70"];
+}
