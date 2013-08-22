@@ -123,7 +123,7 @@ BioNames comprises a CouchDB database, and API, and a web interface.
 
 BioNames can display timelines of the numbers of taxonomic names published in higher taxonomic groups, inspired by Taxatoy [Sarkar et al. 2008]. The next level in the taxonomic hierarchy is shown as a treemap, and the number of names in each year is displayed as an interactive chart. Clicking on a year will list the corresponding publications for that year. 
 
-![TIMELINE](https://github.com/rdmpage/bionames-manuscript/blob/master/timeline.png)
+![TIMELINE](https://raw.github.com/rdmpage/bionames-manuscript/master/timeline.png)
 
 Fig. TIMELINE. Screenshot of the distribution overtime of publications of new names for birds (Aves). The treemap on the left displays taxa below Aves in the taxonomic hierarchy, the chart on the right displays the number of publications in each year. The user has clicked on "2012", resulting in a list of the papers published in that year appearing below the timeline. [http://bionames.org/timeline/Animalia/Chordata/Vertebrata/Aves]
 
@@ -133,7 +133,8 @@ Phylogenies from PhyLOTA are rendered in an interactive viewer using SVG. The us
 
 [TREE]
 
-![TREE](https://github.com/rdmpage/bionames-manuscript/blob/master/phylota_ti10167_cl0_db184.png)
+![TREE](https://raw.github.com/rdmpage/bionames-manuscript/master/phylota_ti10167_cl0_db184.png)
+
 
 Fig. TREE. Screenshot of phylogeny from PhyLoTA as displayed in BioNames. [http://bionames.org/trees/phylota/ti10167_cl0_db184]
 
