@@ -15,12 +15,9 @@ The increasing use of sequence data has made taxonomic relationships readily com
 The vision of "Biodiversity Information on Every Desktop" [Edwards 2000] (perhaps updated to "biodiversity on every device") rests on our ability to not only digitise life (and the documents we have generated during centuries of cataloguing and studying biodiversity) but also to integrate the wealth of data emerging from sequencing machines and optical scanners. There are numerous points of contact between these different efforts, such as specimen codes, bibliographic identifiers, and GenBank accession numbers [Page 2008a][Page 2010] (FIG 1). However, most commonly shared identifier that spans sequences, specimens, and publications is the taxonomic name [Sarkar 2007][Patterson et al. 2010], despite the potential ambiguity in what a given taxonomic name "means" [Kennedy et al. 2005][Franz and Cardona-Duque 2012]. 
 
 ## EOL Challenge
-In response to the Encyclopedia of Life (EOL) [Computational Data Challenge](http://eol.org/info/323) I constructed [BioNames](http://bionames.org). Its goal is to create a database of taxonomic names linked to the primary literature and, wherever possible, to phylogenetic trees. Existing globally unique identifiers for taxonomic names, concepts, publications, and sequences are re-used. Using identifiers rather than cryptic text strings (for example, abbreviated bibliographic citations) simplifies the task of linking - we can rely on exact matching of identifiers rather than approximate matching between names for what may or may not be the same entity. This is particularly relevant once we start to aggregate information from different databases, where the same information (e.g., a publication) may be represented by a different string. Furthermore, if we use existing identifiers we increase the potential to connect to other databases [Page 2008a]. 
+In response to the Encyclopedia of Life (EOL) [Computational Data Challenge](http://eol.org/info/323) I constructed [BioNames](http://bionames.org) [Page 2012]. Its goal is to create a database of taxonomic names linked to the primary literature and, wherever possible, to phylogenetic trees. Existing globally unique identifiers for taxonomic names, concepts, publications, and sequences are re-used. Using identifiers rather than cryptic text strings (for example, abbreviated bibliographic citations) simplifies the task of linking - we can rely on exact matching of identifiers rather than approximate matching between names for what may or may not be the same entity. This is particularly relevant once we start to aggregate information from different databases, where the same information (e.g., a publication) may be represented by a different string. Furthermore, if we use existing identifiers we increase the potential to connect to other databases [Page 2008a].
 
-Identifiers by themselves help bind data together, but we also want access to the data itself. In the case of articles in BioStor we have access to the underlying OCR text, from which we can extract geographic localities and museum specimen codes (Page 2011). Many articles are freely available online as PDFs, these could also be processed using the same 
-
-
-
+This paper outlines how BioNames was built, describes the user interface, and discusses future plans. 
 
 # Materials & Methods
 
@@ -33,37 +30,30 @@ Figure 1 shows the relationships that are the focus of BioNames, namely the link
 
 ## Taxon names
 
-At present the taxonomic scope of BioNames is restricted to names covered by the International Code of Zoological Nomenclature. Taxonomic names were obtained from the [Index of Organism Names (ION)](http://www.organismnames.com). Each name in ION has a Life Science Identifier (LSID) [Martin et al. 2005] which uniquely identifies that name. LSIDs can be dereferenced to return metadata in RDF [Page 2008b], ION LSIDs provide basic information on a taxonomic name using the TDWG Taxon Name LSID Ontology [Hyam 2006], in many cases including bibliographic details for the publication where the name first appear. This bibliographic string was parsed into component elements (e.g., article title, journal, volume, pagination) and 
+At present the taxonomic scope of BioNames is restricted to names covered by the International Code of Zoological Nomenclature. Taxonomic names were obtained from the [Index of Organism Names (ION)](http://www.organismnames.com). Each name in ION has a Life Science Identifier (LSID) [Martin et al. 2005] which uniquely identifies that name. LSIDs can be dereferenced to return metadata in RDF [Page 2008b], ION LSIDs provide basic information on a taxonomic name using the [TDWG Taxon Name LSID Ontology](http://rs.tdwg.org/ontology/voc/TaxonName), in many cases including bibliographic details for the publication where the name first appeared (Fig. RDF). 
 
-Fig x shows the RDF retrieved by dereferencing the LSID urn:lsid:organismnames.com:name:371873, which identifies the taxonomic name *Pinnotheres atrinicola*.
+[RDF]
 
-<?xml version="1.0"?>
-<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:tdwg_co="http://rs.tdwg.org/ontology/voc/Common#" xmlns:tdwg_pc="http://rs.tdwg.org/ontology/voc/PublicationCitation#" xmlns:tdwg_tn="http://rs.tdwg.org/ontology/voc/TaxonName#">
-	<tdwg_tn:TaxonName rdf:about="371873">
-		<dc:identifier>371873</dc:identifier>
-		<dc:creator rdf:resource="http://www.organismnames.com"/>
-		<dc:Title>Pinnotheres atrinicola</dc:Title>
-		<tdwg_tn:nameComplete>Pinnotheres atrinicola</tdwg_tn:nameComplete>
-		<tdwg_tn:nomenclaturalCode rdf:resource="http://rs.tdwg.org/ontology/voc/TaxonName#ICZN"/>
-		<tdwg_co:PublishedIn>Description of a new species of Pinnotheres, and redescription of P. novaezelandiae (Brachyura: Pinnotheridae). New Zealand Journal of Zoology, 10(2) 1983: 151-162.  158 [Zoological Record Volume 120]</tdwg_co:PublishedIn>
-		<tdwg_co:microreference>158</tdwg_co:microreference>
-		<rdfs:seeAlso rdf:resource="http://www.organismnames.com/namedetails.htm?lsid=371873"/>
-	</tdwg_tn:TaxonName>
-</rdf:RDF>
+Fig. RDF. The RDF retrieved by dereferencing the LSID urn:lsid:organismnames.com:name:371873, which identifies the taxonomic name *Pinnotheres atrinicola*.
 
-
-The bibliographic details are encapsulated in the <> string: "Description of a new species of Pinnotheres, and redescription of P. novaezelandiae (Brachyura: Pinnotheridae). New Zealand Journal of Zoology, 10(2) 1983: 151-162.  158 [Zoological Record Volume 120]" I used regular expressions to parse citations in this form, and then attempted to locate the corresponding reference in an external database.
+The bibliographic details are encapsulated in the contents of the "PublishedIn" property. In the example in Fig. RDF this is the string "Description of a new species of Pinnotheres, and redescription of P. novaezelandiae (Brachyura: Pinnotheridae). New Zealand Journal of Zoology, 10(2) 1983: 151-162.  158 [Zoological Record Volume 120]". I used regular expressions to citation strings into their component parts (e.g., article title, journal, volume, pagination), and then attempted to locate the corresponding reference in an external database (see below).
 
 
 ## Bibliographic identifiers
 
 Most taxonomic databases are little more than online collections of 5×3 index cards, a technology taxonomy's founding father Linnaeus pioneered [Müller-Wille and Charmantier 2012]. When taxonomic literature is cited, it is typically as a text string. In populating BioNames every effort has been made to map a bibliographic string to a corresponding identifier, such as a Digital Object identifier (DOI).  While DOIs are the best-known bibliographic identifier, there are several others that are relevant to the taxonomic literature [Page 2009]. DOIs are themselves based on Handles (http://hdl.handle.net) an identifier widely used by digital repositories such as [DSpace](http://www.dspace.org/). A number of journals, such as the Bulletins and Novitates of the American Museum of Natural History are available in DSpace repositories and consequently have Handles. Other major archives such as [JSTOR](http://www.jstor.org/) and [CiNii](http://ci.nii.ac.jp/) have their own unique identifiers (typically integer numbers that are part of a URL). Having a variety of identifiers complicates the task of finding existing identifiers for a particular publication. Whereas for some identifiers, such as DOIs and CiNii NAIDs) (National Institute of Informatics Article IDs) there are OpenURL resolvers for this task, for other identifiers there may be no obvious way to find the identifier other than by using a search engine.
 
-For the example in Fig x, the citation xxxx has the DOI 10.1080/03014223.1983.10423904.
+For the example in Fig. RDF, the citation string "Description of a new species of Pinnotheres, and redescription of P. novaezelandiae (Brachyura: Pinnotheridae). New Zealand Journal of Zoology, 10(2) 1983: 151-162.  158 [Zoological Record Volume 120]" corresponds the article with the DOI 10.1080/03014223.1983.10423904.
 
 Identifiers also exist for aggregations of publications, such as journals. The practice of abbreviating journal titles in citations has led to a plethora of ways to refer to the same journal. For example, the BioStor database [Page 2011b] has accumulated more than ten variations on the name of the journal *Bulletin of Zoological Nomenclature* (such as "Bull Zool Nomen", "Bull Zool Nom.", "Bull. Zool. Nomencl.", etc.). This practice of abbreviating journal names (motivated by the desire to conserve space on the printed page) complicates efforts to match citations to identifiers. One approach to tackling this problem is to map abbreviations to journal-level globally unique identifiers, such as International Standard Serial Numbers  (ISSNs) (for the *Bulletin of Zoological Nomenclature* the ISSN is 0007-5167). In addition to reducing ambiguity, there are web services such as that offered by [WorldCat](http://www.worldcat.org) that take ISSNs and return the history of name changes for a journal, which in turn can help clarify the often complicated history of long-lived journals.
 
 ## Document display
+
+Identifiers by themselves help bind data together, but we also want access to the data itself. In the case of articles
+
+ in BioStor we have access to the underlying OCR text, from which we can extract geographic localities and museum specimen codes (Page 2011). Many articles are freely available online as PDFs, these could also be processed using the same 
+
+
 
 
 
@@ -74,7 +64,7 @@ ION has multiple records for the same name, so names where clustered before popu
 
 ## Mapping names to taxa
 
-Matching taxon names to classifications can present problems. Ideally there would be a one-to-one mapping between a name and a taxon, but complications often arise. In addition to the typical problems of synonymy (more than one name for the same taxon) and homonymy (the same name used for different taxa), name and taxon databases may store different name strings. For example, ION has four records for the name "Nystactes":
+Matching taxon names to classifications can present problems. Ideally there would be a one-to-one mapping between a name and a taxon, but complications often arise. In addition to the typical problems of synonymy (more than one name for the same taxon) and homonymy (the same name used for different taxa), name and taxon databases may store different name strings. For example, ION has four records for the name "Nystactes" (each name is followed by the its LSID):
 
 Nystactes				      urn:lsid:organismnames.com:name:2787598
 Nystactes Bohlke		  urn:lsid:organismnames.com:name:2735131
@@ -85,7 +75,7 @@ GBIF has three taxa with this name:
 
 Nystactes Böhlke, 1957	 2403398
 Nystactes Gloger, 1827	 2475109
-Nystactes Kaup, 1829	 3239722
+Nystactes Kaup, 1829	   3239722
 
 Note the differences in the name string ("o" versus "ö" in "Böhlke", presence or absence of years and commas). To automate the mapping of names to concepts in cases like this I constructed a bipartite graph where the nodes are taxon names, divided into two sets based on which database they came from (e.g., one set from ION, the other from GBIF). I then connect the nodes of the graph by edges whose weights are how similar the names are. 
 
@@ -129,49 +119,40 @@ Phylogenies were obtained from the PhyLoTA database  [Sanderson et al. 2008]. Th
 
 BioNames comprises a CouchDB database, and API, and a web interface. 
 
+## Timeline
 
-Phylogenies from PhyLOTA are rendered in SVG where terminal taxa with the same label have the same colour. This makes it easier to recognise clusters of sequences from the same taxon (e.g., conspecific samples), as well as highlight possible errors (e.g., mislabelled or misidentified sequences).
+BioNames can display timelines of the numbers of taxonomic names published in higher taxonomic groups, inspired by Taxatoy [Sarkar et al. 2008]. The next level in the taxonomic hierarchy is shown as a treemap, and the number of names in each year is displayed as an interactive chart. Clicking on a year will list the corresponding publications for that year. 
 
+[TIMELINE]
 
+Fig. TIMELINE. Screenshot of the distribution overtime of publications of new names for birds (Aves). The treemap on the left displays taxa below Aves in the taxonomic hierarchy, the chart on the right displays the number of publications in each year. The user has clicked on "2012", resulting in a list of the papers published in that year appearing below the timeline. [http://bionames.org/timeline/Animalia/Chordata/Vertebrata/Aves]
 
+## Phylogenies
 
+Phylogenies from PhyLOTA are rendered in an interactive viewer using SVG. The user can zoom in and out, and change the drawing style. Terminal taxa with the same label have the same, colour (Fig. TREE). This makes it easier to recognise clusters of sequences from the same taxon (e.g., conspecific samples), as well as highlight possible errors (e.g., mislabelled or misidentified sequences). At present the colours are arbitrarily chosen, other schemes could be added in future [Lespinats and Fertil 2011]. 
 
-Features
+[TREE]
 
+Fig. TREE. Screenshot of phylogeny from PhyLoTA as displayed in BioNames. [http://bionames.org/trees/phylota/ti10167_cl0_db184]
 
+## Dashboard
 
+The BioNames web site features a "dashboard" which displays various summaries of the data it contains. For example, Fig. PUB shows a bubble chart of the number of articles different publishers have made available online. "Publisher" in this context is broadly defined to include digital archives such as BioStor and JSTOR, repositories using [DSpace](http://www.dspace.org), and commercial publishers such as Elsevier, Informa UK, Magnolia Press, Springer, and Wiley. The diagram is dominated by BioStor, which repurposes Biodiversity Heritage Library content. Hence, the largest single "publisher" in Fig. PUB is providing open access content.
 
-Dashboard
+[PUB]
 
-publishers
-
-
-
+Fig. PUB. Bubble chart showing numbers of articles made available online by different publishers. Magnolia Press is the publisher of *Zootaxa*.
 
 
 # Discussion
 
-
-The state of taxonomy
-
-[coverage of taxa, impact of journals and publishers, what needs to be digitised, 
-
-
-
-
-
-
-## Limitations (degree of connectivity)
-
-
-Each phylogeny in BioNames is associated with one or more publications (i.e., those listed in the GenBank records for the sequence used to obstruct the tree). Some of these will also contain taxonomic descriptions, and so may already exist in BioNames. It would obviously be desirable to merge these records, and this could be most easily done if the GenBank records had bibliographic identifiers. However, a significant fraction of GenBank records lack such identifiers [Miller et al. 2009], hence significant effort will need to be made to merge these two sources of bibliographic data.
-
+The initial release of BioNames had to meet the deadline set by the EOL challenge. However development is ongoing. Below I discuss some potential applications and future directions.
 
 ## Links
 
 BioNames makes extensive use of identifiers to clean and link data, but the real value from identifiers becomes apparent when they are shared, that is, when different databases use the same identifiers for the same entities, instead of minting their own. Reusing identifiers can enable unexpected connections between databases. For example, the PubMed biomedical literature database has a record (PMID:948206) for the paper "Monograph on "*Lithoglyphopsis*" *aperta*, the snail host of Mekong River Schistosomiasis" [Davis et al. 1976]. The PubMed record contains the abstract for the paper, but no link to where the user can obtain a copy of the paper. Actually, this reference is in a volume that has been scanned by the Biodiversity Heritage Library, and the article has been extracted by BioStor (http://biostor.org/reference/102054). If PubMed was linked to BHL, users of PubMed could go straight to the content of the article. But this is just the start. The [Davis et al. 1976] also paper mentions museum specimens in the collection of the Academy of Natural Sciences of Drexel University, Philadelphia. Metadata for these specimens has been aggregated by GBIF, and the BioStor page for this article displays those links. In an ideal world we should be able to traverse the path PubMed → BioStor → GBIF. But in many ways the real gains will come from traversing these links in the other direction. At present, a user of GBIF simply sees metadata for these specimens and a locality map. They are unaware that these specimens have been cited in a paper [Davis et al. 1976] which shows that the snails host the Mekong River schistosome. This connection would be trivial to make if the reciprocal link was made:  GBIF → BioStor. Furthermore, a link BioStor → PubMed would give us access to Medical Subject Headings (MeSH http://www.nlm.nih.gov/mesh/) for the paper. Hence we could imagine ultimately searching GBIF using queries from a controlled vocabulary of biomedical terms. 
 
-Making these connections requires not only that we have digital identifiers, but also that where ever possible we reuse existing identifiers. In practice forging these links can be hard work [Page 2011a]. However, if we restrict ourselves to project-specific identifiers then we stymie attempts to create a network of connected data on biodiversity. 
+Making these connections requires not only that we have digital identifiers, but also that where ever possible we reuse existing identifiers. In practice forging these links can be hard work [Page 2011a], and many links may be missing from existing databases [Miller et al. 2009]. However, if we restrict ourselves to project-specific identifiers then we stymie attempts to create a network of connected data on biodiversity. 
 
 ## Impact
 
@@ -184,10 +165,6 @@ One of the motivations for constructing BioNames is the rise of "dark taxa" in g
 
 In addition to linking older sequences to newer names, as approaches such as DNA barcoding uncover previously overlooked variation, older taxonomic names previously sunk in synonymy may yet become relevant. For example, a number of taxa have been synonymised with the silvery mole-rat *Heliophobius argenteocinereus* Peters, 1846 [Peters 1846] but DNA sequence data has revealed several clades within that species [Faulkes et al. 2011]. Consequently, rather than coin new names for these clades, we can potentially rescue older names from synonymy. Hence DNA barcoding may give a new lease of life to old names. 
 
-[FIG]
-
-[http://bionames.org/trees/phylota/ti10167_cl0_db184]
-
 A key question facing attempts to find names for dark taxa is whether the methods available can be scaled to handle the magnitude of the problem. One could argue that newer technologies such as DNA barcoding make classical taxonomy less relevant, and perhaps the effort in digitising older literature and exposing the taxonomic names it contains is misplaced. A counter argument would be that the taxonomic literature potentially contains a wealth of information on ecology, morphology and behaviour, often for taxa in areas that have been subsequently altered by human activity. Given the rarity of many taxa [Lim et al. 2011], and the uneven taxonomic and geographic distribution of taxonomic expertise [May 1998][Gaston and May 1992], for many species the only significant data on their biology may reside in the legacy literature, possibly under a different name [Solow et al. 1995]. As the legacy biodiversity literature becomes more accessible through projects like BHL, and tools that build upon that project [Page 2011a] there will be considerable opportunities to  mine that literature for basic biological data [Thessen et al. 2012].
 
 
@@ -197,11 +174,11 @@ Recently taxonomic journals have begun to mark up taxonomic names and descriptio
 
 # Availability
 
-
+BioNames is accessible at [http://bionames.org]. The source code used to build the web site is available on GitHub [http://github.com/rdmpage/bionames]. Scripts used to fetch, clean, and reconcile the data are archived in http://github.com/rdmpage/bionames-data]
 
 # Acknowledgements
 
-I thank EOL for the funding that enabled Ryan Schenk to develop the interface for BioNames, and Cyndy Parr (EOL) provided adult supervision. Some of the ideas in this manuscript were first explored in a talk at the "Anchoring Biodiversity Information: From Sherborn to the 21st century and beyond	" symposium held at The Natural History Museum, London, October 28th 2011. I thank Ellinor Michel for the invitation to speak at that meeting.
+I thank EOL for the funding that enabled Ryan Schenk to develop the interface for BioNames, and Cyndy Parr (EOL) for managing the EOL grant, and providing much needed adult supervision. Some of the ideas in this manuscript were first explored in a talk at the "Anchoring Biodiversity Information: From Sherborn to the 21st century and beyond	" symposium held at The Natural History Museum, London, October 28th 2011. I thank Ellinor Michel for the invitation to speak at that meeting.
 
 # References
 
@@ -244,6 +221,8 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 
 - Krell, F.-T. (2000).Nature, 405(6786), 507–508. [doi:10.1038/35014664][Krell 2000]
 
+- Lespinats, Sylvain, & Bernard Fertil. (2011). ColorPhylo: A Color Code to Accurately Display Taxonomic Classifications. Evolutionary Bioinformatics, 257. [doi:10.4137/EBO.S7565][Lespinats and Fertil 2011]
+
 - Lim, G. S., Balke, M., & Meier, R. (2011). Determining Species Boundaries in a World Full of Rarity: Singletons, Species Delimitation Methods. Systematic Biology, 61(1), 165–169. [doi:10.1093/sysbio/syr030][Lim et al. 2011]
 
 - Maddison, D. R., Guralnick, R., Hill, A., Reysenbach, A.-L., & McDade, L. A. (2012). Ramping up biodiversity discovery via online quantum contributions. Trends in Ecology & Evolution, 27(2), 72–77. [doi:10.1016/j.tree.2011.10.010][Maddison et al. 2012]
@@ -274,6 +253,8 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 
 - Page, R. D. M. Dark taxa: GenBank in a post-taxonomic world[http://iphylo.blogspot.co.uk/2011/04/dark-taxa-genbank-in-post-taxonomic.html][Page 2011c]
 
+- Page, R. D. M. 2012. EOL Computable Data Challenge. [doi 10.6084/m9.figshare.92091][Page 2012]
+
 - Parr, C. S., Guralnick, R., Cellinese, N., & Page, R. D. M. (2012). Evolutionary informatics: unifying knowledge about the diversity of life. Trends in Ecology & Evolution, 27(2), 94–103. [doi:10.1016/j.tree.2011.11.001]
 
 - Patterson, D. J., Cooper, J., Kirk, P. M., Pyle, R. L., & Remsen, D. P. (2010). Names are key to the big new biology. Trends in Ecology & Evolution, 25(12), 686–691. [doi:10.1016/j.tree.2010.09.004][Patterson et al. 2010]
@@ -285,6 +266,8 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 - Sanderson, M., Boss, D., Chen, D., Cranston, K., & Wehe, A. (2008). The PhyLoTA Browser: Processing GenBank for Molecular Phylogenetics Research. Systematic Biology, 57(3), 335–346. [doi:10.1080/10635150802158688][Sanderson et al. 2008]
 
 - Sarkar, I. N. (2007). Biodiversity informatics: organizing and linking information across the spectrum of life. Briefings in Bioinformatics, 8(5), 347–357. [doi:10.1093/bib/bbm037][Sarkar 2007]
+
+- Sarkar, I., Schenk, R., & Norton, C. N. (2008). Exploring historical trends using taxonomic name metadata. BMC Evolutionary Biology, 8(1), 144. [doi:10.1186/1471-2148-8-144][Sarkar et al. 2008]
 
 - Schindel DE, Miller SE (2010) Provisional nomenclature: the on-ramp to taxonomic names. In: Polaszek A (Ed) Systema Naturae 250 - The Linnaean Ark. CRC Press, 109-115 pp.
 
@@ -321,6 +304,7 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 [Kaup 1829]: http://dx.doi.org/10.5962/bhl.title.63915
 [Kennedy et al. 2005]: http://dx.doi.org/10.1007/11530084_8
 [Krell 2000]: http://dx.doi.org/10.1038/35014664
+[Lespinats and Fertil 2011][doi:10.4137/EBO.S7565]
 [Lim et al. 2011]: http://dx.doi.org/10.1093/sysbio/syr030
 [Maddison et al. 2012]: http://dx.doi.org/10.1016/j.tree.2011.10.010
 [Martin et al. 2005]: http://dx.doi.org/10.1016/S1359-6446(05)03651-2
@@ -336,12 +320,14 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 [Page 2011a]: http://dx.doi.org/10.1371/currents.RRN1228
 [Page 2011b]: http://dx.doi.org/10.1186/1471-2105-12-187
 [Page 2011c]: http://iphylo.blogspot.co.uk/2011/04/dark-taxa-genbank-in-post-taxonomic.html
+[Page 2012]: http://dx.doi.org/10.6084/m9.figshare.92091
 [Parr et al. 2012]: http://dx.doi.org/10.1016/j.tree.2011.11.001
 [Patterson et al. 2010]: http://dx.doi.org/10.1016/j.tree.2010.09.004
 [Penev et al. 2010]: http://dx.doi.org/10.3897/zookeys.50.538
 [Sanderson et al. 2008]: http://dx.doi.org/10.1080/10635150802158688
 [Peters 1846]: http://biostor.org/reference/102396
 [Sarkar 2007]: http://dx.doi.org/10.1093/bib/bbm037
+[Sarkar et al. 2008]: http://dx.doi.org/10.1186/1471-2148-8-144
 [Solow et al. 1995]: http://dx.doi.org/10.1093/sysbio/44.1.93
 [Taberlet et al. 2012]: http://dx.doi.org/10.1111/j.1365-294X.2012.05470.x
 [Thessen et al. 2012]: http://dx.doi.org/10.1155/2012/391574
