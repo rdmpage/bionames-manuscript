@@ -19,7 +19,12 @@ Large-scale digitisation of biodiversity data is underway on at least three broa
 
 The increasing use of sequence data has made taxonomic relationships readily computable (e.g., by building phylogenetic trees). Yet many DNA sequences are disconnected from classical taxonomy because they lack formal taxonomic names [Page 2011c][Parr et al. 2012]. Barcoding has been responsible for a massive influx of these "dark taxa" into the sequence databases [Page 2011c]. Many of these unnamed barcode taxa have since been suppressed by Genbank. But even without the barcoding sequences, dark taxa have been steadily increasing in number in recent years. Names may have a special place in the hearts of taxonomists [Patterson et al. 2010], but the pace of biodiversity discovery is outstripping our ability to put names on taxa, as evidenced by the rise of dark taxa in GenBank. There are increasing calls to adopt less formal taxonomic naming schemes [Schindel and Miller 2010], or to focus on describing biodiversity without necessarily naming it [Deans et al. 2012][Maddison et al. 2012]. A significant challenge will be determining whether these dark taxa represent newly discovered taxa, or come from known taxa but have not been identified as such [Hibbett Glotzer 2011][Nagy et al. 2011]. This gap between names and genes is mirrored by biodiversity databases that reflect a long tradition of aggregating taxonomic names and data tagged with those names, but lack either links to the primary literature of taxonomy, or the genomic data that is flooding into GenBank.
 
-The vision of "Biodiversity Information on Every Desktop" [Edwards 2000] (perhaps updated to "biodiversity on every device") rests on our ability to not only digitise life (and the documents we have generated during centuries of cataloguing and studying biodiversity) but also to integrate the wealth of data emerging from sequencing machines and optical scanners. There are numerous points of contact between these different efforts, such as specimen codes, bibliographic identifiers, and GenBank accession numbers [Page 2008a][Page 2010] (FIG 1). However, most commonly shared identifier that spans sequences, specimens, and publications is the taxonomic name [Sarkar 2007][Patterson et al. 2010], despite the potential ambiguity in what a given taxonomic name "means" [Kennedy et al. 2005][Franz and Cardona-Duque 2012]. 
+The vision of "Biodiversity Information on Every Desktop" [Edwards 2000] (perhaps updated to "biodiversity on every device") rests on our ability to not only digitise life (and the documents we have generated during centuries of cataloguing and studying biodiversity) but also to integrate the wealth of data emerging from sequencing machines and optical scanners. There are numerous points of contact between these different efforts, such as specimen codes, bibliographic identifiers, and GenBank accession numbers [Page 2008a][Page 2010] (Fig. MODEL). However, most commonly shared identifier that spans sequences, specimens, and publications is the taxonomic name [Sarkar 2007][Patterson et al. 2010], despite the potential ambiguity in what a given taxonomic name "means" [Kennedy et al. 2005][Franz and Cardona-Duque 2012]. 
+
+![MODEL](https://raw.github.com/rdmpage/bionames-manuscript/master/model.png)
+
+Fig. MODEL. Data model used by BioNames.
+
 
 ## EOL Challenge
 In response to the Encyclopedia of Life (EOL) [Computational Data Challenge](http://eol.org/info/323) I constructed [BioNames](http://bionames.org) [Page 2012]. Its goal is to create a database of taxonomic names linked to the primary literature and, wherever possible, to phylogenetic trees. Existing globally unique identifiers for taxonomic names, concepts, publications, and sequences are re-used. Using identifiers rather than cryptic text strings (for example, abbreviated bibliographic citations) simplifies the task of linking - we can rely on exact matching of identifiers rather than approximate matching between names for what may or may not be the same entity. This is particularly relevant once we start to aggregate information from different databases, where the same information (e.g., a publication) may be represented by a different string. Furthermore, if we use existing identifiers we increase the potential to connect to other databases [Page 2008a].
@@ -109,16 +114,15 @@ BioNames comprises a CouchDB database, an API, and a web interface. Key features
 
 ## Search
 
-## Documents
+BioNames features a simple search tool. 
 
 ## Document display
 
-Of course, having the literature digitised is not the same as having ready access to it. Numerous parties are undertaking digitisation efforts, and the results are being made available under a wide range of conditions. Some output is available under explicitly open access licenses (MacCallum 2007), such as content from BHL and the journals published by Pensoft and the Public Library of Science. Some publishers, notably Taylor and Francis, and Wiley are digitising back catalogues of journals and making them available to subscribers. Archives such as JSTOR and CiNii have a mixture of free and subscription-based content. Many smaller journals, often published by scientific societies are providing their contently for free online, if not explicitly under an open license. 
+BioNames uses the [DocumentCloud](https://github.com/documentcloud/document-viewer) viewer to display both PDFs, and images form digital archives such as BioStor and Gallica (Fig. DOC).
 
-Identifiers by themselves help bind data together, but we also want access to the data itself. In the case of articles 
+![DOC](https://raw.github.com/rdmpage/bionames-manuscript/master/document.png)
 
- in BioStor we have access to the underlying OCR text, from which we can extract geographic localities and museum specimen codes (Page 2011). Many articles are freely available online as PDFs, these could also be processed using the same 
-
+Fig. DOC. Screenshot of BioNames displaying a document from BioStor [Conle and Hennemann 2002] [http://bionames.org/references/3e93d39afe5c3642e8aecfcd0cea6f92]
 
 
 ## Timeline
@@ -198,6 +202,8 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 - Böhlke, J. E. (1957). On the Occurrence of Garden Eels in the Western Atlantic, with a Synopsis of the Heterocongrinae. Proceedings of the Academy of Natural Sciences of Philadelphia, 109: 59-79. [http://www.jstor.org/stable/4064494][Böhlke 1957]
 
 - Böhlke, J. E. (1958). Substitute Names for *Nystactes* Bohlke and *Lucaya* Bohlke, Preoccupied. Copeia, 1958(1), 59. [doi:10.2307/1439557][Böhlke 1958]
+
+- Conle, Oskar V, and Frank H Hennemann (2002) Revision of neotropic Phasmatodea: The tribe Anisomorphini sensu Bradley & Galil 1977: (Insecta, Phasmatodea, Pseudophasmatidae). Spixiana Supplement 28: 1–141. [http://biostor.org/reference/118220][Conle and Hennemann 2002]
 
 - Davis GM, Kitikoon V, Temcharoen P (1976) Monograph on "*Lithoglyphopsis*" *aperta*, the snail host of Mekong River schistosomiasis. Malacologia 15(2): 241-87. [http://biostor.org/reference/102054][Davis et al. 1976]
 
@@ -297,6 +303,7 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 [Bollacker et al. 2008]: http://dx.doi.org/10.1145/1376616.1376746
 [Böhlke 1957]: http://www.jstor.org/stable/4064494
 [Böhlke 1958]: http://dx.doi.org/10.2307/1439557
+[Conle and Hennemann 2002]: http://biostor.org/reference/118220
 [Deans et al. 2012]: http://dx.doi.org/10.1016/j.tree.2011.11.007
 [Davis et al. 1976]: http://biostor.org/reference/102054
 [Edwards 2000]: http://dx.doi.org/10.1126/science.289.5488.2312
