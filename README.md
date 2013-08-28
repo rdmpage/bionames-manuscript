@@ -10,7 +10,7 @@ Glasgow G12 8QQ, UK
 
 # Abstract
 
-BioNames aims to create a biodiversity "dashboard" where at a glance we can see a summary of the taxonomic and phylogenetic information we have for a given taxon, and that information is seamlessly linked together in one place. It combines classifications from EOL with animal taxonomic names from ION, and bibliographic data from multiple sources including BHL, CrossRef, and Mendeley. The goal is to create a database where the user can drill down from a taxonomic name to see the original description, track the fate of that name through successive revisions, and see other related literature. Publications that are freely available will displayed in situ. If the taxon has been sequenced, the user can see one or more phylogenetic trees for those sequences, where each sequence is in turn linked to the publication that made those sequences available. For a biologist the site provides a quick answer to the basic question “what is this taxon?”, coupled with with graphical displays of the relevant bibliographic and genomic information.
+BioNames is a web database of taxonomic names for animals, linked to the primary literature and, wherever possible, to phylogenetic trees. It aims to provide a biodiversity "dashboard" where at a glance we can see a summary of the taxonomic and phylogenetic information we have for a given taxon and hence provide a quick answer to the basic question "what is this taxon?" BioNames combines classifications from the Global Biodiversity Information Facility (GBIF) and GenBank, imagery from the Encyclopedia of Life (EOL), animal names from the Index of Organism Names (ION), and bibliographic data from multiple sources including the Biodiversity Heritage Library (BHL) and CrossRef. The user interface design includes display of full text articles, interactive timelines, and zoomable phylogenies. It is available at http://bionames.org.
 
 
 # Introduction
@@ -113,27 +113,46 @@ Once aggregated, cleaned, and reconciled, the data was converted to JSON (JavaSc
 
 # Results
 
-BioNames comprises a CouchDB database, an API, and a web interface. Key features of the interface are outlined below.
+BioNames comprises a CouchDB database and a web interface. Key features of the interface are outlined below.
 
 ## Search
 
-BioNames features a simple search tool that takes a scientific name and returns taxonomic names and concepts that match that name, together with any publications and phylogenies that contain the name.
+BioNames features a simple search tool that takes a scientific name and returns taxonomic names and concepts that match that name, together with any publications and phylogenies that contain the name. Fig. SEARCH shows an example search result.
+
+![SEARCH](https://raw.github.com/rdmpage/bionames-manuscript/master/search.png)
+
+Fig. SEARCH. Screenshot of the search results for a query BioNames. The results include names that match the query, taxon concepts from GBIF and NCBI with thumbnail images from EOL, phylogenies containing members of the genus, and relevant taxonomic publications. 
 
 ## Document display
 
-BioNames uses the [DocumentCloud](https://github.com/documentcloud/document-viewer) viewer to display both PDFs, and images from digital archives such as BioStor and [Gallica](http://gallica.bnf.fr/) (Fig. DOC).
+BioNames uses the [DocumentCloud](https://github.com/documentcloud/document-viewer) viewer to display both PDFs, and page images from digital archives such as BioStor and [Gallica](http://gallica.bnf.fr/) (Fig. DOC).
 
 ![DOC](https://raw.github.com/rdmpage/bionames-manuscript/master/document.png)
 
 Fig. DOC. Screenshot of BioNames displaying a document from BioStor [Conle and Hennemann 2002]. The document viewer can display page images, thumbnails, and (where available) text. http://bionames.org/references/3e93d39afe5c3642e8aecfcd0cea6f92
 
+## Journals
+
+Much of the work in populating BioNames comprises mapping citation to string to bibliographic identifiers and, where possible, linking those citations to full text. For each journal that has a ISSN, BioNames has a corresponding web page that lists all the articles from that journal that are in the database, and provides a graphical summary of how many of those articles have been located online (Fig. ISSN).
+
+![ISSN](https://raw.github.com/rdmpage/bionames-manuscript/master/pesw.png)
+
+Fig. ISSN. Screenshot of the page in BioNames for the journal *Proceedings of the Entomological Society of Washington* (ISSN 0013-8797). The centre column lists the articles in a volume selected by the user using the index on the left. The right hand column displays basic data about the journal, and a graphical display of how many articles have been mapped to a globally unique identifier. [http://bionames.org/issn/0013-8797]
+
 ## Timeline
 
-BioNames can display timelines of the numbers of taxonomic names published in higher taxonomic groups, inspired by Taxatoy [Sarkar et al. 2008]. The next level in the taxonomic hierarchy is shown as a treemap, and the number of names in each year is displayed as an interactive chart. Clicking on a year will list the corresponding publications for that year. 
+BioNames can display timelines of the numbers of taxonomic names published in higher taxonomic groups, inspired by Taxatoy [Sarkar et al. 2008]. The next level in the taxonomic hierarchy is shown as a treemap, and the number of names in each year is displayed as an interactive chart. Clicking on an individual year will list the corresponding publications for that year. 
 
 ![TIMELINE](https://raw.github.com/rdmpage/bionames-manuscript/master/timeline.png)
 
 Fig. TIMELINE. Screenshot of the distribution overtime of publications of new names for birds (Aves). The treemap on the left displays taxa below Aves in the taxonomic hierarchy, the chart on the right displays the number of publications in each year that publish a new bird name. The user has clicked on "2012", resulting in a list of the papers published in that year appearing below the timeline (only two are shown). http://bionames.org/timeline/Animalia/Chordata/Vertebrata/Aves
+
+## Taxa
+
+![TAXA](https://raw.github.com/rdmpage/bionames-manuscript/master/rousettus.png)
+
+Fig. TAXA. Screenshot of the bibliography tab on a taxon page in BioNames. This example shows the publications relevant to the bat genus *Rousettus*, including those for synonyms. The user can select publications from a given time slice and/or set of synonyms. 
+
 
 ## Phylogenies
 
@@ -163,26 +182,26 @@ Making these connections requires not only that we have digital identifiers, but
 
 ## Text mining
 
-Much of the value of a scientific publication lies dormant unless it is accessible to text mining, which requires access to full text. Where possible BioNames stores information on the publisher of each article (Fig. PUB), which could then be used to prioritise discussions with publishers on gaining access to full text [Van Noorden 2012]. Fortunately, the single largest "publisher" of content in BioNames is BioStor [Page 2011b], which contains scans and OCR text from the Biodiversity Heritage Library. BHL makes its content available under a Creative Commons license, and so can be readily mined. Indeed, the text has already been indexed by tools that can recognise taxonomic names [Akella et al. 2012]. There is considerable scope for further text mining, for example by looking for co-occurrences between taxonomic names that might indicate taxonomic (e.fg., synonyms) or ecological relationships (e.g., hosts and parasites).
+Much of the value of a scientific publication lies dormant unless it is accessible to text mining, which requires access to full text. Where possible BioNames stores information on the publisher of each article (Fig. PUB), which could then be used to prioritise discussions with publishers on gaining access to full text [Van Noorden 2012]. Fortunately, the single largest "publisher" of content in BioNames is BioStor [Page 2011b], which contains scans and OCR text from the Biodiversity Heritage Library. BHL makes its content available under a Creative Commons license, and so can be readily mined. Indeed, the text has already been indexed by tools that can recognise taxonomic names [Akella et al. 2012]. There is considerable scope for further text mining, for example by looking for co-occurrences between taxonomic names that might indicate taxonomic (e.g., synonyms) or ecological relationships (e.g., hosts and parasites).
 
 
 ## Impact of taxonomic literature
 
-The taxonomic community has long felt disadvantaged by the role of citation-based "impact factor" in assessing the importance of taxonomic research [Garfield 2001] [Krell 2000] [Werner 2006] especially as much of the taxonomic literature appears in relatively low-impact journals. A common proposal is to include citations to the taxonomic authority for every name mentioned in a scientific paper [Wägele et al. 2011]. Regardless of the merits of this idea, there is value in surfacing identifiers for the taxonomic literature. In addition to citations, identifiers can facilitate computing other measures of the value of a taxonomic paper.  There is a growing interest in additional, alternative measures of post-publication impact of a publication   in terms of activity such as social bookmarking, and commentary on web sites ("altmetrics") [Yan and Gerstein 2011]. Gathering these metrics is greatly facilitated by using standard bibliographic identifiers (otherwise, how do we know whether two commentators are discussing the same article or not?). If taxonomic literature is be part of this burgeoning conversation then it needs to be able to be identified unambiguously.
+The taxonomic community has long felt disadvantaged by the role of citation-based "impact factor" in assessing the importance of taxonomic research [Garfield 2001] [Krell 2000] [Werner 2006] especially as much of the taxonomic literature appears in relatively low-impact journals. A common proposal is to include citations to the taxonomic authority for every name mentioned in a scientific paper [Wägele et al. 2011]. Regardless of the merits of this idea, there is value in surfacing identifiers for the taxonomic literature. In addition to citations, identifiers can facilitate computing other measures of the value of a taxonomic paper.  There is a growing interest in additional measures of post-publication impact of a publication in terms of activity such as social bookmarking, and commentary on web sites ("altmetrics") [Yan and Gerstein 2011]. Gathering these metrics is greatly facilitated by using standard bibliographic identifiers (otherwise, how do we know whether two commentators are discussing the same article or not?). If taxonomic literature is be part of this burgeoning conversation then it needs to be able to be identified unambiguously.
 
 
 ## Dark taxa
 
-One of the original motivations for constructing BioNames is the rise of "dark taxa" in genomics databases. It is clear that some dark taxa do, in fact, have names. For example, consider the frog "*Gephyromantis* aff. *blanci* MV-2005" (NCBI tax_id 321743), which has a single DNA sequence AY848308 associated with it. This sequence was published as part of a DNA barcoding study [Vences et al. 2005]. If we enter the accession number AY848308 into Google we find two documents, one the supplementary table for [Vences et al. 2005], the other the a subsequent paper by [Vences and Riva 2007] that describes the frog with this sequence as a new species, *Gephyromantis runewsweeki*. Hence the taxon originally labelled "*Gephyromantis* aff. *blanci* MV-2005" is now *Gephyromantis runewsweeki*.
+One of the original motivations for constructing BioNames is the rise of "dark taxa" in genomics databases [Page 2011c]. It is clear that some dark taxa do, in fact, have names. For example, consider the frog "*Gephyromantis* aff. *blanci* MV-2005" (NCBI tax_id 321743), which has a single DNA sequence AY848308 associated with it. This sequence was published as part of a DNA barcoding study [Vences et al. 2005]. If we enter the accession number AY848308 into Google we find two documents, one the supplementary table for [Vences et al. 2005], the other the a subsequent paper by [Vences and Riva 2007] that describes the frog with this sequence as a new species, *Gephyromantis runewsweeki*. Hence the taxon originally labelled "*Gephyromantis* aff. *blanci* MV-2005" is now *Gephyromantis runewsweeki*.
 
 In addition to linking older sequences to newer names, as approaches such as DNA barcoding uncover previously overlooked variation, older taxonomic names previously sunk in synonymy may yet become relevant. For example, a number of taxa have been synonymised with the silvery mole-rat *Heliophobius argenteocinereus* Peters, 1846 [Peters 1846] but DNA sequence data has revealed several clades within that species [Faulkes et al. 2011]. Consequently, rather than coin new names for these clades, we can potentially rescue older names from synonymy. Hence DNA barcoding may give a new lease of life to old names. 
 
-The example of linking "*Gephyromantis* aff. *blanci* MV-2005" is now *Gephyromantis runewsweeki* was relatively straightforward, but it still required significant time to track down the species description. A key question facing attempts to find names for dark taxa is whether the methods available can be scaled to handle the magnitude of the problem. Alternatively, one could argue that newer technologies such as DNA barcoding make classical taxonomy less relevant, and perhaps the effort in digitising older literature and exposing the taxonomic names it contains is misplaced. A counter argument would be that the taxonomic literature potentially contains a wealth of information on ecology, morphology and behaviour, often for taxa in areas that have been subsequently altered by human activity. Given the rarity of many taxa [Lim et al. 2011], and the uneven taxonomic and geographic distribution of taxonomic expertise [May 1998][Gaston and May 1992], for many species the only significant data on their biology may reside in the legacy literature (possibly under a different name [Solow et al. 1995]). As the legacy biodiversity literature becomes more accessible through projects such as BHL (and services that build upon that project [Page 2011a]) there will be considerable opportunities to  mine that literature for basic biological data [Thessen et al. 2012].
+The example of linking "*Gephyromantis* aff. *blanci* MV-2005" is now *Gephyromantis runewsweeki* was relatively straightforward, but it still required significant time to track down the species description. A key question facing attempts to find names for dark taxa is whether the methods available can be scaled to handle the magnitude of the problem. Alternatively, one could argue that newer technologies such as DNA barcoding make classical taxonomy less relevant, and perhaps the effort in digitising older literature and exposing the taxonomic names it contains is misplaced. A counter argument would be that the taxonomic literature potentially contains a wealth of information on ecology, morphology and behaviour, often for taxa in areas that have been subsequently altered by human activity. Given the rarity of many taxa [Lim et al. 2011], and the uneven taxonomic and geographic distribution of taxonomic expertise [May 1998][Gaston and May 1992], for many species the only significant data on their biology may reside in the legacy literature (possibly under a different name [Solow et al. 1995]). As this legacy becomes more accessible through projects such as BHL (and services that build upon that project [Page 2011a]) there will be considerable opportunities to mine that literature for basic biological data [Thessen et al. 2012].
 
 
 ## Publishing platform
 
-Recently some taxonomic journals have begun to mark up taxonomic names and descriptions [Penev et al. 2010], which is a precursor to linking names and data together. But these developments leave open the problem of what these links will point to. If we have a database of all taxonomic names and the associated literature (such as BioNames aims to be for zoological names), then such a database would provide an obvious destination for those links. Indeed, ultimately, we could envisage embedding new taxonomic publications within such a database, so that each new publication becomes simply another document within the database. In the same way, we could use automated methods to extend the process of tagging names, specimens and literature cited to the legacy literature [Page 2010], so that the entire body of taxonomic knowledge becomes a single interwoven web of names, citations, publications, and data.
+Recently some taxonomic journals have begun to mark up taxonomic names and descriptions [Penev et al. 2010], which is a precursor to linking names and data together. But these developments leave open the problem of what these links will point to. If we have a database of all taxonomic names and the associated literature (such as BioNames aims to be for zoological names), then such a database would provide an obvious destination for those links. Indeed, ultimately, we could envisage embedding new taxonomic publications within such a database, so that each new publication becomes simply another document within the database [Gerstein and Junker 2002]. In the same way, we could use automated methods to extend the process of tagging names, specimens and literature cited to the legacy literature [Page 2010], so that the entire body of taxonomic knowledge becomes a single interwoven web of names, citations, publications, and data.
 
 # Availability
 
@@ -190,7 +209,7 @@ BioNames is accessible at http://bionames.org. The source code used to build the
 
 # Acknowledgements
 
-I thank EOL for the funding that enabled Ryan Schenk to develop the interface for BioNames, and Cyndy Parr (EOL) for managing the EOL Computational Challenge grant and helpful feedback on the development of BioNames. Some of the ideas in this manuscript were first explored in a talk at the "Anchoring Biodiversity Information: From Sherborn to the 21st century and beyond" symposium held at The Natural History Museum, London, October 28th 2011. I thank Ellinor Michel for the invitation to speak at that meeting.
+I thank EOL for the funding that enabled Ryan Schenk to develop the interface for BioNames, and Cyndy Parr (EOL) for managing the EOL Computational Challenge grant, and for providing helpful feedback on the development of BioNames. Some of the ideas in this manuscript were first explored in a talk at the "Anchoring Biodiversity Information: From Sherborn to the 21st century and beyond" symposium held at The Natural History Museum, London, October 28th 2011. I thank Ellinor Michel for the invitation to speak at that meeting.
 
 # References
 
@@ -229,6 +248,8 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 
 - Gaston, K. J., & May, R. M. (1992). Taxonomy of taxonomists. Nature, 356(6367), 281–282. [doi:10.1038/356281a0][Gaston and May 1992]
 
+- Gerstein, M. and Jochen Junker (2002). Blurring the boundaries between scientific 'papers' and biological databases. Nature [http://www.nature.com/nature/debates/e-access/Articles/gernstein.html][Gertsien and Junker 2002]
+
 - Hebert, P. D. N., Cywinska, A., Ball, S. L., & deWaard, J. R. (2003). Biological identifications through DNA barcodes. Proceedings of the Royal Society B: Biological Sciences, 270(1512), 313–321. [doi:10.1098/rspb.2002.2218][Hebert 2003]
 
 - Hibbett, D., & Glotzer, D. (2011). Where are all the undocumented fungal species? A study of *Mortierella* demonstrates the need for sequence-based classification. New Phytologist, 191(3), 592–596. [doi:10.1111/j.1469-8137.2011.03819.x][Hibbett and Glotzer 2011]
@@ -251,7 +272,6 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 
 - MAY, R. M. (1988). How Many Species Are There on Earth? Science, 241(4872), 1441–1449. [doi:10.1126/science.241.4872.1441][May 1988]
 
-
 - Miller, H., Norton, C. N., & Sarkar, I. N. (2009). GenBank and PubMed: How connected are they? BMC Research Notes, 2(1), 101. [doi:10.1186/1756-0500-2-101][Miller et al. 2009]
 
 - Müller-Wille, S., & Charmantier, I. (2012). Natural history and information overload: The case of Linnaeus. Studies in History and Philosophy of Science Part C: Studies in History and Philosophy of Biological and Biomedical Sciences, 43(1), 4–15. [doi:10.1016/j.shpsc.2011.10.021][Müller-Wille and Charmantier 2012]
@@ -260,19 +280,19 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 
 - Page, R. D. M. (1983). Description of a new species of Pinnotheres , and redescription of P. novaezelandiae (Brachyura: Pinnotheridae) . New Zealand Journal of Zoology, 10(2), 151–162. [doi:10.1080/03014223.1983.10423904][Page 1983]
 
-- Page, R. D. M. (2008). Biodiversity informatics: the challenge of linking data and the role of shared identifiers. Briefings in Bioinformatics, 9(5), 345–354. [doi:10.1093/bib/bbn022][Page 2008a]
+- Page, R. D. M. (2008a). Biodiversity informatics: the challenge of linking data and the role of shared identifiers. Briefings in Bioinformatics, 9(5), 345–354. [doi:10.1093/bib/bbn022][Page 2008a]
 
-- Page, R. D. (2008). LSID Tester, a tool for testing Life Science Identifier resolution services. Source Code for Biology and Medicine, 3(1), 2. [doi:10.1186/1751-0473-3-2][Page 2008b]
+- Page, R. D. (2008b). LSID Tester, a tool for testing Life Science Identifier resolution services. Source Code for Biology and Medicine, 3(1), 2. [doi:10.1186/1751-0473-3-2][Page 2008b]
 
 - Page, R. D. (2009). bioGUID: resolving, discovering, and minting identifiers for biodiversity informatics. BMC Bioinformatics, 10(Suppl 14), S5. [doi:10.1186/1471-2105-10-S14-S5][Page 2009]
 
 - Page, R. D. M. (2010). Enhanced display of scientific articles using extended metadata. Web Semantics: Science, Services and Agents on the World Wide Web, 8(2-3), 190–195. [doi:10.1016/j.websem.2010.03.004][Page 2010]
 
-- Page, R. D. M. (2011). Linking NCBI to Wikipedia: a wiki-based approach. PLoS Currents, 3, RRN1228. [doi:10.1371/currents.RRN1228][Page 2011a]
+- Page, R. D. M. (2011a). Linking NCBI to Wikipedia: a wiki-based approach. PLoS Currents, 3, RRN1228. [doi:10.1371/currents.RRN1228][Page 2011a]
 
-- Page, R. D. (2011). Extracting scientific articles from a large digital archive: BioStor and the Biodiversity Heritage Library. BMC Bioinformatics, 12(1), 187. [doi:10.1186/1471-2105-12-187][Page 2011b]
+- Page, R. D. (2011b). Extracting scientific articles from a large digital archive: BioStor and the Biodiversity Heritage Library. BMC Bioinformatics, 12(1), 187. [doi:10.1186/1471-2105-12-187][Page 2011b]
 
-- Page, R. D. M. Dark taxa: GenBank in a post-taxonomic world[http://iphylo.blogspot.co.uk/2011/04/dark-taxa-genbank-in-post-taxonomic.html][Page 2011c]
+- Page, R. D. M. (2011c). Dark taxa: GenBank in a post-taxonomic world[http://iphylo.blogspot.co.uk/2011/04/dark-taxa-genbank-in-post-taxonomic.html][Page 2011c]
 
 - Page, R. D. M. 2012. EOL Computable Data Challenge. [doi 10.6084/m9.figshare.92091][Page 2012]
 
@@ -328,6 +348,7 @@ GenBank. Nucl. Acids Res. (2012) 40 (D1): D48-D53. [doi:10.1093/nar/gkr1202][Ben
 [Franz and Cardona-Duque 2013]: http://dx.doi.org/10.1080/14772000.2013.806371
 [Garfield 2001]: http://dx.doi.org/10.1038/35093267
 [Gaston and May 1992]: http://dx.doi.org/10.1038/356281a0
+[Gertsien and Junker 2002]: http://www.nature.com/nature/debates/e-access/Articles/gernstein.html
 [Hebert 2003]: http://dx.doi.org/10.1098/rspb.2002.2218
 [Hibbett and Glotzer 2011]: http://dx.doi.org/10.1111/j.1469-8137.2011.03819.x
 [Kaup 1829]: http://dx.doi.org/10.5962/bhl.title.63915
